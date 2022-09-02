@@ -7,7 +7,7 @@ Of course you do. Everyone should know this.
 
 Recently, a sudden wave of nostalgia commanded me to download Purble Place, and I had a few <sup>*(too many)*</sup> games on Comfy Cake. 
 
-<img src="../graphics/comfy_cakes_stats.png" height=150>
+<img src="graphics/comfy_cakes_stats.png" height=150>
 
 Not to brag, but I'm pretty good at it.
 
@@ -23,7 +23,7 @@ There are three difficulties: beginner, intermediate, and advanced. Let's use th
 
 When you start the game, you are greeted with this interface. 
 <p align=center>
-    <img src="../graphics/purble_shop_beginner_start_interface.png" height=150>
+    <img src="graphics/purble_shop_beginner_start_interface.png" height=150>
 </p>
 
 In the wardrobe, there are three features (eyes, nose, and mouth), and for each feature there are three colours (red, purble, yellow). The goal of this game is to guess the correct set of features of this blue butt-plug-looking creature. No offense. 
@@ -36,7 +36,7 @@ Answer:
 After picking a set of features (here I picked red eyes, red nose, and red mouth), the game tells you how many features you got right. 
 
 <p align=center>
-    <img src="../graphics/purble_shop_beginner_guess1_interface.png" height=150>
+    <img src="graphics/purble_shop_beginner_guess1_interface.png" height=150>
 </p>
 
 In this case, we got two features right. Since this is the beginner difficulty, the game is very generous in telling us which specific features we got right. 
@@ -48,7 +48,7 @@ In intermediate difficulty, there are four features in total and four colours fo
 In advanced difficulty, there are five features in total and five colours for each features. However, we are given one extra piece of information besides the number of right features: the number of ***right colour***, but ***wrong feature***. 
 
 <p align=center>
-    <img src="../graphics/purble_shop_advanced_guess1_interface.png" height=150>
+    <img src="graphics/purble_shop_advanced_guess1_interface.png" height=150>
 </p>
 
 It's a very simple game, but it requires a heightened sense of logic. 
