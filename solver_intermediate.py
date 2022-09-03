@@ -57,22 +57,39 @@ for k in range(10):
 
     cond = (guess_feat_vec, guess_res)
 
+    # narrow down possible feature combinations
     possible_combs = list_possible_combs(cond = cond, select_from = possible_combs)
-    exp_bits = []
-    right_probs = []
+
+    # initialise expected bits and probabilities of being right lists
+    exp_bits_for_each_comb = []
+    right_probs_for_each_comb = []
+
+    # for every possible feature combination
     for try_comb in all_combs:
-        probs = []
-        bits = []
+        probs_for_each_event = []
+        bits_for_each_event = []
+
+        # for each possible event (no features right, one feature right, ..., five features right)
         for i in range(5):
             p = len(list_possible_combs(cond = (try_comb, i), select_from = possible_combs)) / len(possible_combs)
-            probs.append(p)
-            bits.append(get_bits(p))
-        exp_bits.append(np.sum(np.array(probs) * np.array(bits)))
-        # print(f"The combination {try_comb} gives {np.sum(np.array(probs) * np.array(bits))} expected bits and is {100 * (try_comb.tolist() in possible_combs.tolist()) / len(possible_combs)}% correct.")
-        right_probs.append((try_comb.tolist() in possible_combs.tolist()) / len(possible_combs))
-    right_probs = np.array(right_probs)
-    right_probs_desc_idx = (-right_probs).argsort()
+            probs_for_each_event.append(p)
+            bits_for_each_event.append(get_bits(p))
+
+        # compute expected bits
+        exp_bits = np.sum(np.array(probs_for_each_event) * np.array(bits_for_each_event))
+        exp_bits_for_each_comb.append(exp_bits)
+        
+        # compute probability of being right
+        right_prob = (try_comb.tolist() in possible_combs.tolist()) / len(possible_combs) # do better that this
+        right_probs_for_each_comb.append(right_prob)
+
+    # get combinations which provide maximal bits
+    max_bits_combs_idx = np.where(exp_bits_for_each_comb == np.max(exp_bits_for_each_comb))[0]
+    max_bits_combs = all_combs[max_bits_combs_idx]
+
+    right_probs_for_each_comb = np.array(right_probs_for_each_comb)
+    right_probs_for_each_comb_desc_idx = (-right_probs_for_each_comb).argsort()
     print("Most probable guesses:")
-    for idx in right_probs_desc_idx[:5]:
-        print(f"'{' '.join(all_combs[idx])}' -- {right_probs[idx] * 100}%")
-    print(f"Recommend trying the combination '{' '.join(all_combs[np.argmax(exp_bits)])}' since it provides the most expected information")
+    for idx in right_probs_for_each_comb_desc_idx[:5]:
+        print(f"'{' '.join(all_combs[idx])}' -- {right_probs_for_each_comb[idx] * 100}%")
+    print(f"Recommend trying the combination '{' '.join(all_combs[np.argmax(exp_bits_for_each_comb)])}' since it provides the most expected information")
