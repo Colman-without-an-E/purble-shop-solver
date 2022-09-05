@@ -7,7 +7,7 @@ if __name__ == "__main__":
     "This solves the intermediate level of the game 'Purble Shop' of 'Purble Place'.\n \n" \
     "After each guess in the game, you will be asked to input your guess, followed by " \
     "the result of it, i.e. the number of correct features.\n \n" \
-    "To enter your guess, type the unique symbol representing each colour" \
+    "To enter your guess, type the unique symbol representing each colour " \
     "in order of features with a space in between. \n \n"\
     "You will be given an example after you have chosen your colour symbols. \n \n" \
     "Have fun! \n \n \n")
@@ -100,6 +100,7 @@ for guess_count in range(10):
     # print the 5 most probable guesses
     probable_guesses_idx = np.argpartition(right_probs_for_each_comb, -5)[-5:]
     probable_guesses_idx = probable_guesses_idx[np.argsort(-right_probs_for_each_comb[probable_guesses_idx])] # sort
+    print("\nMost probable guesses")
     for idx in probable_guesses_idx:
         print(f"'{' '.join(all_combs[idx])}'   ----   {right_probs_for_each_comb[idx] * 100}%")
 
@@ -107,8 +108,12 @@ for guess_count in range(10):
     max_bits_combs_idx = np.where(exp_bits_for_each_comb == np.max(exp_bits_for_each_comb))[0]
     max_bits_max_right_prob_combs_idx = np.argmax(right_probs_for_each_comb[max_bits_combs_idx])
     recommended_guess_feat_vec = all_combs[max_bits_combs_idx[max_bits_max_right_prob_combs_idx]]
-    print(f"Recommend trying the combination '{' '.join(recommended_guess_feat_vec)}' since it provides the most expected information")
+    print("\nRecommend trying the combination '{}' since it provides the most expected information".format(
+        ' '.join(recommended_guess_feat_vec)
+        ))
 
 # print end message
 ordinality = ["st", "nd", "rd"] + ["th"] * 7
-print(f"Congratulations! You are correct on your {guess_count+1}{ordinality[guess_count]} guess.")
+print("\nCongratulations! You are correct on your {0}{1} guess.".format(
+    guess_count+1, ordinality[guess_count])
+    )
