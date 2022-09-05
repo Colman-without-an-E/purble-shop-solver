@@ -1,4 +1,3 @@
-from multiprocessing import pool
 import numpy as np
 import itertools
 from collections import Counter
@@ -20,18 +19,26 @@ while dups_in_colours: # while there are duplicated colour symbols
         print("\n \nCannot have duplicated colour symbols!\n \n")
     print("Enter colour symbols\n")
     colours = []
-    for i in range(4):
+    for i in range(5):
         colours.append(str(input(f"Colour {i+1}: ")))
     dups_in_colours = len(colours) != len(set(colours))
     flag = True
 
-all_combs = np.array([list(feat_vec) for feat_vec in itertools.product(colours, repeat = 4)])
+all_combs = np.array([list(feat_vec) for feat_vec in itertools.product(colours, repeat = 5)])
 possible_combs = all_combs
 
 # create right colour right feature score matrix
-X = np.array([all_combs for i in range(4**4)])
+X = np.array([all_combs for i in range(5**5)])
 Y = np.transpose(X, axes = (1,0,2))
 RCRF = np.count_nonzero(X == Y, axis=2)
+
+# create right colour wrong feature score matrix
+l = []
+for colour in colours:
+    S = np.tile(np.count_nonzero(all_combs == colour, axis = 1), (5**5, 1))
+    T = S.T
+    l.append(np.minimum(S, T))
+RCWF = np.sum(l, axis = 0) - RCRF
 
 print(f"\n \nEnter your guesses \ne.g.Enter")
 print(" ".join(colours))
@@ -42,19 +49,24 @@ possible_combs_idx = np.arange(len(all_combs))
 
 # force stop after 10 guesses
 for guess_count in range(10):
-    
+
     # user input
     guess_feat_vec = [str(x) for x in input("\nFeature vector guessed: ").split()]
-    guess_res = int(input("Number of right features: "))
+    a = int(input("Number of right colour right features: "))
+    b = int(input("Number of right colour wrong features: "))
 
-    if guess_res == 4:
+    guess_feat_vec_idx = np.where(np.all(all_combs == guess_feat_vec, axis = 1))[0][0]
+    guess_res = (a, b)
+
+    if guess_res[0] == 5:
         break
-    guess_feat_vec_idx = np.nonzero(np.all(all_combs == guess_feat_vec, axis = 1))[0][0]
 
     # update possible feature combinations
-    possible_combs_idx = np.intersect1d(
-            np.where(RCRF[guess_feat_vec_idx] == guess_res)[0], 
-            possible_combs_idx, assume_unique=True)
+    for score_mat, score in zip((RCRF, RCWF), guess_res):
+        possible_combs_idx = np.intersect1d(
+            np.where(score_mat[guess_feat_vec_idx] == score)[0], 
+            possible_combs_idx, assume_unique=True
+        )
     possible_combs = all_combs[possible_combs_idx]
     pool_size = len(possible_combs)
 
@@ -65,23 +77,24 @@ for guess_count in range(10):
     # for every feature combination
     for try_comb_idx, try_comb in enumerate(all_combs):
 
-        # compute score_frequency
+        # compute score frequency
         rcrf_scores = RCRF[try_comb_idx, possible_combs_idx]
-        score_frequency = Counter(rcrf_scores)
+        rcwf_scores = RCWF[try_comb_idx, possible_combs_idx]
+        score_frequency = Counter(list(zip(rcrf_scores, rcwf_scores)))
 
         # expected bits
         score_probs = np.array(list(
             score_frequency.values()
-        )) / pool_size # unordered; ommitted scores with probability 0
+        )) / pool_size # unordered; omitted scores with probability 0
         score_bits = -np.log2(score_probs)
         exp_bits = (score_probs * score_bits).sum()
         exp_bits_for_each_comb.append(exp_bits)
 
         # probability of being right
-        right_frequency = score_frequency.get(4)
+        right_frequency = score_frequency.get((5,0))
         right_prob = 0 if right_frequency is None else right_frequency / pool_size
         right_probs_for_each_comb.append(right_prob)
-
+    
     right_probs_for_each_comb = np.array(right_probs_for_each_comb)
 
     # print the 5 most probable guesses
@@ -90,7 +103,7 @@ for guess_count in range(10):
     for idx in probable_guesses_idx:
         print(f"'{' '.join(all_combs[idx])}'   ----   {right_probs_for_each_comb[idx] * 100}%")
 
-    # print recommended guess
+    # print recomennded guess
     max_bits_combs_idx = np.where(exp_bits_for_each_comb == np.max(exp_bits_for_each_comb))[0]
     max_bits_max_right_prob_combs_idx = np.argmax(right_probs_for_each_comb[max_bits_combs_idx])
     recommended_guess_feat_vec = all_combs[max_bits_combs_idx[max_bits_max_right_prob_combs_idx]]
