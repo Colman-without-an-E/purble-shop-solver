@@ -24,9 +24,9 @@ If you haven't played Purble Shop before, you are still very welcome here *(albe
 There are three difficulties: beginner, intermediate, and advanced. Let's use the beginner difficulty to illustrate what's going on. 
 
 When you start the game, you are greeted with this interface. 
-<figure align=center>
+<p align=center>
     <img src="graphics/purble_shop_beginner_start_interface.png" height=180>
-</figure>
+</p>
 
 In the wardrobe, there are three features (eyes, nose, and mouth), and for each feature there are three colours (red, purble, yellow). The goal of this game is to guess the correct set of features of this blue butt-plug-looking creature. No offense. 
 
@@ -49,9 +49,9 @@ In intermediate difficulty, there are four features in total and four colours fo
 
 In advanced difficulty, there are five features in total and five colours for each features. However, we are given one extra piece of information besides the number of right features: the number of ***right colour***, but ***wrong feature***. 
 
-<figure align=center>
+<p align=center>
     <img src="graphics/purble_shop_advanced_guess1_interface.png" height=180>
-</figure>
+</p>
 
 It's a very simple game, but it requires a heightened sense of logic. 
 
@@ -95,9 +95,9 @@ From here on out, you input the features you guessed and their corresponding res
 
 For my first guess, I'll guess red, red, red, red, and red. It really doesn't matter what your first guess is. 
 
-<figure align=center>
+<p align=center>
     <img src="graphics/purble_shop_advanced_guess1.png", height=180>
-</figure>
+</p>
 
 1 right colour right feature, and 0 right colour wrong features. Let the solver know that:
 ```
@@ -137,9 +137,9 @@ Recommend trying the combination 'yellow yellow purple green yellow' since it pr
 ```
 Again, let's try the suggestion. 
 
-<figure align=center>
+<p align=center>
     <img src="graphics/purble_shop_advanced_guess3.png", height=180>
-</figure>
+</p>
 
 ```
 Feature vector guessed: red purple purple blue blue
@@ -157,9 +157,9 @@ Recommend trying the combination 'red purple green green yellow' since it provid
 ```
 The solver has narrowed it to only **4** choices! Let's hope this is the final guess...
 
-<figure align=center>
+<p align=center>
     <img src="graphics/purble_shop_advanced_guess4.png", height=180>
-</figure>
+</p>
 
 Ooh! Not quite right! But after entering our guess into our terminal, 
 
