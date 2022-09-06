@@ -241,7 +241,7 @@ What about the solver for advanced level difficulty? Surely, it wouldn't perform
 <figure align=center>
     <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
     <figcaption>
-    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
+        Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
     </figcaption>
 </figure>
 
