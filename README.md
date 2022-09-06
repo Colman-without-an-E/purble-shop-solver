@@ -17,7 +17,7 @@ My confidence persuaded me into trying my luck at Purble Shop, and it didn't tak
     <img src="graphics/text1.png" width=250>
 </p>
 
-And it is quite successful. If you want to use the bot for yourself, skip to the [solver instruction](#solver-instruction) section. 
+And it is quite successful. If you want to use the bot immediately, see the [solver instruction](#solver-instruction) section. 
 ## How to play
 If you haven't played Purble Shop before, you are still very welcome here *(albeit less welcome)* and here is how to play the game. 
 
