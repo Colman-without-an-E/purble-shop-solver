@@ -197,7 +197,7 @@ Congratulations! You are correct on your 5th guess.
 Since the solver is deterministic, i.e. given the same guesses it will always give the same recommendation, we can easily analyse its performance by going through every single possible feature combination and count how many guesses are needed. 
 
 <figure align=center>
-    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250 alt="alt">
     <figcaption>
     Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
     </figcaption>
