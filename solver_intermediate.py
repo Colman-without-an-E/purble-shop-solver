@@ -1,4 +1,3 @@
-from multiprocessing import pool
 import numpy as np
 import itertools
 from collections import Counter
