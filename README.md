@@ -196,11 +196,11 @@ Congratulations! You are correct on your 5th guess.
 
 Since the solver is deterministic, i.e. given the same guesses it will always give the same recommendation, we can easily analyse its performance by going through every single possible feature combination and count how many guesses are needed. 
 
+{% include test.html url="data_and_graphs/intermediate_guess_frequency_graph1.png" description="Description" %}
+
 <figure align=center>
-    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
-    <figcaption>
-    Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
-    </figcaption>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250 alt="alt">
+    <figcaption alt="alt2">Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information</figcaption>
 </figure>
 
 The solver succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
@@ -241,7 +241,7 @@ What about the solver for advanced level difficulty? Surely, it wouldn't perform
 <figure align=center>
     <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
     <figcaption>
-    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
+        Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
     </figcaption>
 </figure>
 
