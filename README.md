@@ -24,9 +24,9 @@ If you haven't played Purble Shop before, you are still very welcome here *(albe
 There are three difficulties: beginner, intermediate, and advanced. Let's use the beginner difficulty to illustrate what's going on. 
 
 When you start the game, you are greeted with this interface. 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_beginner_start_interface.png" height=180>
-</p>
+</figure>
 
 In the wardrobe, there are three features (eyes, nose, and mouth), and for each feature there are three colours (red, purble, yellow). The goal of this game is to guess the correct set of features of this blue butt-plug-looking creature. No offense. 
 
@@ -49,9 +49,9 @@ In intermediate difficulty, there are four features in total and four colours fo
 
 In advanced difficulty, there are five features in total and five colours for each features. However, we are given one extra piece of information besides the number of right features: the number of ***right colour***, but ***wrong feature***. 
 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_advanced_guess1_interface.png" height=180>
-</p>
+</figure>
 
 It's a very simple game, but it requires a heightened sense of logic. 
 
@@ -95,9 +95,9 @@ From here on out, you input the features you guessed and their corresponding res
 
 For my first guess, I'll guess red, red, red, red, and red. It really doesn't matter what your first guess is. 
 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_advanced_guess1.png", height=180>
-</p>
+</figure>
 
 1 right colour right feature, and 0 right colour wrong features. Let the solver know that:
 ```
@@ -137,9 +137,9 @@ Recommend trying the combination 'yellow yellow purple green yellow' since it pr
 ```
 Again, let's try the suggestion. 
 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_advanced_guess3.png", height=180>
-</p>
+</figure>
 
 ```
 Feature vector guessed: red purple purple blue blue
@@ -157,9 +157,9 @@ Recommend trying the combination 'red purple green green yellow' since it provid
 ```
 The solver has narrowed it to only **4** choices! Let's hope this is the final guess...
 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_advanced_guess4.png", height=180>
-</p>
+</figure>
 
 Ooh! Not quite right! But after entering our guess into our terminal, 
 
@@ -179,9 +179,9 @@ Recommend trying the combination 'red yellow yellow green blue' since it provide
 ```
 We've got the answer! Now, let's see if it works!
 
-<p align=center>
+<figure align=center>
     <img src="graphics/purble_shop_advanced_guess5.png", height=180>
-</p>
+</figure>
 
 Yep! It works! And it only took us 5 tries! 
 ```
@@ -194,3 +194,66 @@ Congratulations! You are correct on your 5th guess.
 
 ## Analysis
 
+Since the solver is deterministic, i.e. given the same guesses it will always give the same recommendation, we can easily analyse its performance by going through every single possible feature combination and count how many guesses are needed. 
+
+<figure align=center>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
+    <figcaption>
+    Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
+    </figcaption>
+</figure>
+
+The solver succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
+
+`['c', 'd', 'b', 'c']`
+<br>
+`['c', 'd', 'c', 'a']`
+<br>
+`['d', 'd', 'c', 'b']`
+
+where `'a', 'b', 'c', 'd'` symbolise the four colours in order, take 7 guesses to get right. But on average, it takes only **5.11** guesses to get it right. 
+
+### Comparing approaches
+
+Let's compare the two different approaches of: 
+
+1. maximising the **amount of expected information** (which the solver runs on), and
+2. maximising the **probability of being right**
+
+<figure align=center>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph2.png width=250>
+    <figcaption>
+    Figure 2: Frequency graph of number of guesses with intermediate level solver; maximising probability of being right
+    </figcaption>
+</figure>
+
+Well, it's like the graph speaks for itself. Obviously, maximising probability of being right performs worse, taking up to 10 guesses for some combinations. However, in terms of average number of guesses required, it isn't all that bad! On average, it takes **5.19** guesses to get it right. 
+
+What about the solver for advanced level difficulty? Surely, it wouldn't perform nearly as well as that for intermediate level difficulty! Right...?
+
+<figure align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph1.png width=250>
+    <figcaption>
+    Figure 3: Frequency graph of number of guesses with advanced level solver; maximising amount of information
+    </figcaption>
+</figure>
+
+<figure align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
+    <figcaption>
+    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
+    </figcaption>
+</figure>
+
+Surprisingly, it performs arguably better than that for intermediate level difficulty (see figure 3). It also takes at most 7 guesses to get it right, but an astounding 🌟**4.95**🌟 guesses to get it right on average! 
+
+Even if the less optimal approach of maximising probability of being right is used (see figure 4), it still only takes **4.98** guesses to get it right on average! ***And***, you can even be sure that you'll get it right in 7 guesses or less! 
+
+Here is summary below. 
+
+Table 5: Expected number of guesses of solvers for intermediate and advanced difficulty level using the two different approaches
+
+|Maximising                    |Intermediate|Advanced|
+|------------------------------|:----------:|:------:|
+|Expected amount of information|    5.11    |  4.95  |
+|Probability of being right    |    5.19    |  4.98  |
