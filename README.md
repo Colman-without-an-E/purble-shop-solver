@@ -198,9 +198,7 @@ Since the solver is deterministic, i.e. given the same guesses it will always gi
 
 <figure align=center>
     <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250 alt="alt">
-    <figcaption>
-    Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
-    </figcaption>
+    <figcaption>Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information</figcaption>
 </figure>
 
 The solver succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
