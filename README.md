@@ -7,7 +7,7 @@ Of course you do. Everyone knows this.
 
 Recently, a sudden wave of nostalgia commanded me to download Purble Place, and I had a few <sup>*(too many)*</sup> games on Comfy Cake. 
 
-<img src="graphics/comfy_cakes_stats.png" height=150>
+<img src="graphics/comfy_cakes_stats.png" height=180>
 
 Not to brag, but I'm pretty good at it.
 
@@ -25,7 +25,7 @@ There are three difficulties: beginner, intermediate, and advanced. Let's use th
 
 When you start the game, you are greeted with this interface. 
 <p align=center>
-    <img src="graphics/purble_shop_beginner_start_interface.png" height=180>
+    <img src="graphics/purble_shop_beginner_start_interface.png" height=250>
 </p>
 
 In the wardrobe, there are three features (eyes, nose, and mouth), and for each feature there are three colours (red, purble, yellow). The goal of this game is to guess the correct set of features of this blue butt-plug-looking creature. No offense. 
@@ -33,12 +33,13 @@ In the wardrobe, there are three features (eyes, nose, and mouth), and for each 
 But how do we know what the correct set of features is?
 
 Answer:
-<p style="text-align:center; font-size:20px">We guess!</p>
+### We guess!
+<br>
 
 After picking a set of features (here I picked red eyes, red nose, and red mouth), the game tells you how many features you got right. 
 
 <p align=center>
-    <img src="graphics/purble_shop_beginner_guess1_interface.png" height=180>
+    <img src="graphics/purble_shop_beginner_guess1_interface.png" height=250>
 </p>
 
 In this case, we got two features right. Since this is the beginner difficulty, the game is very generous in telling us which specific features we got right. 
@@ -50,7 +51,7 @@ In intermediate difficulty, there are four features in total and four colours fo
 In advanced difficulty, there are five features in total and five colours for each features. However, we are given one extra piece of information besides the number of right features: the number of ***right colour***, but ***wrong feature***. 
 
 <p align=center>
-    <img src="graphics/purble_shop_advanced_guess1_interface.png" height=180>
+    <img src="graphics/purble_shop_advanced_guess1_interface.png" height=250>
 </p>
 
 It's a very simple game, but it requires a heightened sense of logic. 
@@ -96,7 +97,7 @@ From here on out, you input the features you guessed and their corresponding res
 For my first guess, I'll guess red, red, red, red, and red. It really doesn't matter what your first guess is. 
 
 <p align=center>
-    <img src="graphics/purble_shop_advanced_guess1.png", height=180>
+    <img src="graphics/purble_shop_advanced_guess1.png", height=250>
 </p>
 
 1 right colour right feature, and 0 right colour wrong features. Let the solver know that:
@@ -117,7 +118,7 @@ Recommend trying the combination 'red purple purple blue blue' since it provides
 Even the best guess has only a 0.078125% chance of being correct. So let's try getting more information by using the solver's suggestion in the game:
 
 <p align=center>
-    <img src="graphics/purble_shop_advanced_guess2.png", height=180>
+    <img src="graphics/purble_shop_advanced_guess2.png", height=250>
 </p>
 
 Let the solver know that:
@@ -138,7 +139,7 @@ Recommend trying the combination 'yellow yellow purple green yellow' since it pr
 Again, let's try the suggestion. 
 
 <p align=center>
-    <img src="graphics/purble_shop_advanced_guess3.png", height=180>
+    <img src="graphics/purble_shop_advanced_guess3.png", height=250>
 </p>
 
 ```
@@ -158,7 +159,7 @@ Recommend trying the combination 'red purple green green yellow' since it provid
 The solver has narrowed it to only **4** choices! Let's hope this is the final guess...
 
 <p align=center>
-    <img src="graphics/purble_shop_advanced_guess4.png", height=180>
+    <img src="graphics/purble_shop_advanced_guess4.png", height=250>
 </p>
 
 Ooh! Not quite right! But after entering our guess into our terminal, 
@@ -179,9 +180,9 @@ Recommend trying the combination 'red yellow yellow green blue' since it provide
 ```
 We've got the answer! Now, let's see if it works!
 
-<figure align=center>
-    <img src="graphics/purble_shop_advanced_guess5.png", height=180>
-</figure>
+<p align=center>
+    <img src="graphics/purble_shop_advanced_guess5.png", height=250>
+</p>
 
 Yep! It works! And it only took us 5 tries! 
 ```
@@ -196,12 +197,12 @@ Congratulations! You are correct on your 5th guess.
 
 Since the solver is deterministic, i.e. given the same guesses it will always give the same recommendation, we can easily analyse its performance by going through every single possible feature combination and count how many guesses are needed. 
 
-<figure align=center>
+<p align=center>
     <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
     <figcaption>
     Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
     </figcaption>
-</figure>
+</p>
 
 The solver succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
 
