@@ -1,7 +1,19 @@
 # Purble Shop Solver
+
+## Table of Content
+1. [Introduction](#introduction)
+2. [How to play](#how-to-play)
+4. [Solver instruction](#solver-instruction)
+3. [Approach](#approach)
+5. [Analysis](#analysis)
+    - [Expectation analysis](#expectation-analysis)
+    - [Variance analysis](#variance-analysis)
+6. [Coding](#coding)
+
+## Introduction
 Hey, you! Remember Purble Place?
 
-<img src="https://windowsreport.com/wp-content/uploads/2022/07/Purble-Place-Windows-11-1.png" height=200>
+<img src="https://windowsreport.com/wp-content/uploads/2022/07/Purble-Place-Windows-11-1.png" height=250>
 
 Of course you do. Everyone knows this. 
 
@@ -17,13 +29,14 @@ My confidence persuaded me into trying my luck at Purble Shop, and it didn't tak
     <img src="graphics/text1.png" width=250>
 </p>
 
-And it is quite successful. If you want to use the bot immediately, see the [solver instruction](#solver-instruction) section. 
+And it is quite successful. 
 ## How to play
-If you haven't played Purble Shop before, you are still very welcome here *(albeit less welcome)* and here is how to play the game. 
+If you haven't played Purble Shop before, you are still very welcome here *(albeit less welcome)* and here is how to play the game. Skip to [solver instruction](#solver-instruction) section if you know how to play already. 
 
 There are three difficulties: beginner, intermediate, and advanced. Let's use the beginner difficulty to illustrate what's going on. 
 
 When you start the game, you are greeted with this interface. 
+
 <p align=center>
     <img src="graphics/purble_shop_beginner_start_interface.png" height=250>
 </p>
@@ -55,12 +68,6 @@ In advanced difficulty, there are five features in total and five colours for ea
 </p>
 
 It's a very simple game, but it requires a heightened sense of logic. 
-
-## Approach
-
-Perhaps counter-intuitive, but you should not guess the set of features you think is the most likely to be right. Instead, we should eliminate as many sets of features based on give information. In other words, we are maximising the ***amount of information*** we will obtain for each guess. In fact, maximising the probability of being right will result in a poorer performance (see [analysis](#analysis) section). 
-
-When I first started approaching this problem mathematically, I was immediately reminded of <a href="https://www.youtube.com/watch?v=v68zYyaEmEA&t=601s">3Blue1Brown's video</a> on solving <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>. This approach uses extremely similar idea, so I recommend watching his video for more information (and nicer graphic too!). 
 
 ## Solver instruction
 There are two solvers:
@@ -193,18 +200,49 @@ Number of right colour wrong features: 0
 Congratulations! You are correct on your 5th guess.
 ```
 
+## Approach
+
+Perhaps counter-intuitive, but you should not guess the set of features you think is the most likely to be right. Instead, we should eliminate as many sets of features based on give information. In other words, we are maximising the ***amount of information*** we will obtain for each guess. In fact, maximising the probability of being right results in a poorer performance (see [analysis](#analysis) section). 
+
+When I first started approaching this problem mathematically, I was immediately reminded of <a href="https://www.youtube.com/watch?v=v68zYyaEmEA&t=601s">3Blue1Brown's video</a> on solving <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>. This approach uses extremely similar idea, so I recommend watching his video for more information (and nicer graphic too!). 
+
 ## Analysis
+
+### Expectation analysis
 
 Since the solver is deterministic, i.e. given the same guesses it will always give the same recommendation, we can easily analyse its performance by going through every single possible feature combination and count how many guesses are needed. 
 
+<br></br>
+
+Table 1: Expected number of guesses of solvers for intermediate and advanced difficulty level with different approaches
+
+|Maximising                    |Intermediate|Advanced|
+|------------------------------|:----------:|:------:|
+|Expected amount of information|    5.11    |  4.95  |
+|Probability of being right    |    5.19    |  4.98  |
+
+<br></br>
+
+In both levels, the solver with the approach of maximising **expected amount of information** performs better than maximising **probability of being right**. Well, by a little bit. 
+
+One very surprising observation is that on average, the solvers for the advanced level get the right combination quicker than the intermediate level, in ***less than five guesses***! This is because we are provided extra information (the number of right colour wrong features) in advanced level after each guess. In fact, this distinction between the two levels affects the...
+
+### Variance analysis
+
+Let's go back to the intermediate solver for a second. 
+
+<br></br>
+
 <p align=center>
     <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
-    <figcaption>
-    Figure 1: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
-    </figcaption>
+</p>
+<p align=center>
+    Figure 2: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
 </p>
 
-The solver succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
+<br></br>
+
+From figure 2, we see the solver maximising amount of information succeeded in finding the correct four-feature-four-colour combination in at most 7 tries. In particular, the combinations: 
 
 `['c', 'd', 'b', 'c']`
 <br>
@@ -212,51 +250,65 @@ The solver succeeded in finding the correct four-feature-four-colour combination
 <br>
 `['d', 'd', 'c', 'b']`
 
-where `'a', 'b', 'c', 'd'` symbolise the four colours in order, take 7 guesses to get right. But on average, it takes only **5.11** guesses to get it right. 
+where `'a'`, `'b'`, `'c'`, and `'d'` symbolise the four colours in order, take 7 guesses to get right. 
 
-### Comparing approaches
+However, if the approach of maximising probability of being right is used, it could take up to ***10*** guesses to get it right! (See below figure 3)
 
-Let's compare the two different approaches of: 
+<br></br>
 
-1. maximising the **amount of expected information** (which the solver runs on), and
-2. maximising the **probability of being right**
-
-<figure align=center>
+<p align=center>
     <img src=data_and_graphs/intermediate_guess_frequency_graph2.png width=250>
-    <figcaption>
-    Figure 2: Frequency graph of number of guesses with intermediate level solver; maximising probability of being right
-    </figcaption>
-</figure>
+</p>
+<p align=center>
+    Figure 3: Frequency graph of number of guesses with intermediate level solver; maximising probability of being right
+</p>
 
-Well, it's like the graph speaks for itself. Obviously, maximising probability of being right performs worse, taking up to 10 guesses for some combinations. However, in terms of average number of guesses required, it isn't all that bad! On average, it takes **5.19** guesses to get it right. 
+<br></br>
 
-What about the solver for advanced level difficulty? Surely, it wouldn't perform nearly as well as that for intermediate level difficulty! Right...?
+Although from previous [expectation analysis](#expectation-analysis) section we saw that the number of guesses needed on average is fairly similar using the two different approaches, we also want the solver to behave stably. So this is why we are interested in the variance. Remember:
 
-<figure align=center>
-    <img src=data_and_graphs/advanced_guess_frequency_graph1.png width=250>
-    <figcaption>
-    Figure 3: Frequency graph of number of guesses with advanced level solver; maximising amount of information
-    </figcaption>
-</figure>
+> A lower variance corresponds to a stabler solver.
 
-<figure align=center>
-    <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
-    <figcaption>
-    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
-    </figcaption>
-</figure>
+And here's the table of variance. 
 
-Surprisingly, it performs arguably better than that for intermediate level difficulty (see figure 3). It also takes at most 7 guesses to get it right, but an astounding 🌟**4.95**🌟 guesses to get it right on average! 
+<br></br>
 
-Even if the less optimal approach of maximising probability of being right is used (see figure 4), it still only takes **4.98** guesses to get it right on average! ***And***, you can even be sure that you'll get it right in 7 guesses or less! 
-
-Here is summary below. 
-
-Table 5: Expected number of guesses of solvers for intermediate and advanced difficulty level using the two different approaches
+Table 4: Variance of number of guesses of solvers for intermediate and advanced difficulty level with different approaches
 
 |Maximising                    |Intermediate|Advanced|
 |------------------------------|:----------:|:------:|
-|Expected amount of information|    5.11    |  4.95  |
-|Probability of being right    |    5.19    |  4.98  |
+|Expected amount of information|    0.89    |  0.38  |
+|Probability of being right    |    1.46    |  0.53  |
+
+<br></br>
+
+As seen from figure 2 and figure 3, there is a significant difference in variance between the two approaches for the intermediate level solver. For the advanced one, there is still a sizable difference, but definitely not as much. Perhaps it would be more intuitive to simply show you the guess frequency graphs. 
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph1.png width=250>
+</p>
+<p align=center>
+    Figure 5: Frequency graph of number of guesses with advanced level solver; maximising amount of information
+</p>
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
+</p>
+<p align=center>
+    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
+</p>
+
+<br></br>
+
+Honestly, not too different! The reason for that is because we are given an additional information in advanced level after each guess: 
+
+>The number of right colour wrong features
+
+Just this one little extra piece of information significantly reduce the difference in variance! 
+
 
 ## Coding
