@@ -234,7 +234,7 @@ Let's go back to the intermediate solver for a second.
 <br></br>
 
 <p align=center>
-    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=250>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph1.png width=400>
 </p>
 <p align=center>
     Figure 2: Frequency graph of number of guesses with intermediate level solver; maximising amount of information
@@ -257,7 +257,7 @@ However, if the approach of maximising probability of being right is used, it co
 <br></br>
 
 <p align=center>
-    <img src=data_and_graphs/intermediate_guess_frequency_graph2.png width=250>
+    <img src=data_and_graphs/intermediate_guess_frequency_graph2.png width=400>
 </p>
 <p align=center>
     Figure 3: Frequency graph of number of guesses with intermediate level solver; maximising probability of being right
@@ -282,12 +282,14 @@ Table 4: Variance of number of guesses of solvers for intermediate and advanced 
 
 <br></br>
 
-As seen from figure 2 and figure 3, there is a significant difference in variance between the two approaches for the intermediate level solver. For the advanced one, there is still a sizable difference, but definitely not as much. Perhaps it would be more intuitive to simply show you the guess frequency graphs. 
+As inferred from figure 2 and figure 3, there is a significant difference in variance between the two approaches for the intermediate level solver. 
+
+For the advanced one, there is still a sizable difference, but definitely not as much. Perhaps it would be more intuitive to simply show you the guess frequency graphs. 
 
 <br></br>
 
 <p align=center>
-    <img src=data_and_graphs/advanced_guess_frequency_graph1.png width=250>
+    <img src=data_and_graphs/advanced_guess_frequency_graph1.png width=400>
 </p>
 <p align=center>
     Figure 5: Frequency graph of number of guesses with advanced level solver; maximising amount of information
@@ -296,10 +298,10 @@ As seen from figure 2 and figure 3, there is a significant difference in varianc
 <br></br>
 
 <p align=center>
-    <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=250>
+    <img src=data_and_graphs/advanced_guess_frequency_graph2.png width=400>
 </p>
 <p align=center>
-    Figure 4: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
+    Figure 6: Frequency graph of number of guesses with advanced level solver; maximising probability of being right
 </p>
 
 <br></br>
@@ -310,5 +312,41 @@ Honestly, not too different! The reason for that is because we are given an addi
 
 Just this one little extra piece of information significantly reduce the difference in variance! 
 
+In fact, if we're not given this piece of information, we obtain a variance of **0.99** with the approach of maximising expected information and **1.39** with the approach of maximising probability of being right. 
+
+See below graphical representations of the number of guesses required if the number of right colour wrong features is not given after each guess. 
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph3.png>
+</p>
+<p align=center>
+    Figure 7: Frequency graph of number of guesses with advanced level solver; missing right colour wrong feature; maximising probability of being right
+</p>
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_guess_frequency_graph4.png>
+</p>
+<p align=center>
+    Figure 8: Frequency graph of number of guesses with advanced level solver; missing right colour wrong feature; maximising probability of being right
+</p>
+
+<br></br>
+
+This could be due to the fact we are actually conditioning on one more random variable, which leads to a narrower distribution. Further research is required. 
 
 ## Coding
+
+This section discusses how the algorithm works and how the code is implemented. 
+
+Let's start off with the preliminary. 
+
+### Preliminary
+
+Here are some definitions required before jumping into the pseudocode. 
+$V$
+
+Below shows how the code is implemented. 
