@@ -354,7 +354,7 @@ Here are some useful definitions before jumping into the pseudocode.
 
 For intermediate level, we have
 
-$C:=\{ \text{'1', '2', '3', '4'} \}$, where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
+$C:=\bigl\{ \text{'1', '2', '3', '4'} \bigr\}$, where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
 
 ##### *(These colour symbols do not have to be numbers and can be whatever the user wants. Numbers are chosen only because they look nicer.)*
 
@@ -368,7 +368,7 @@ $\mathbf{V}:=$ all combinations $\in \text{M}_{256\times4}(C)$ such that $\mathb
 
 $V_{pos}:=$ the set of possible combinations given guess results, and is $C^4$ initially. 
 
-#### $\mathbf{M}_{rcrf}$ := $(m_{ij})$ $\in \text{M}_{256256}$ $(\{0,1,2,3,4\})$ where $m_{ij}$ is the number of right colour right features when $\mathbf{V}[i,:]$ is the true feature vector and $\mathbf{V}[j,:]$ is the guess feature vector. 
+$\mathbf{M}_{rcrf} := (m_{ij})\in \text{M}_{256\times 256}(\{0,1,2,3,4\})$ where $m_{ij}$ is the number of right colour right features when $\mathbf{V}[i,:]$ is the true feature vector and $\mathbf{V}[j,:]$ is the guess feature vector. 
 
 ##### Note: Number of right colour right features is the same when the true feature vector is swapped with the guess feature vector, i.e. $m_{ij} = m_{ji}$ for $i, j = 1,2,...,256$. $\mathbf{M}_{rcrf}$ is symmetric follows. 
 
