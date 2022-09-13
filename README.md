@@ -10,7 +10,9 @@
     - [Variance analysis](#variance-analysis)
 6. [Coding](#coding)
     - [Preliminary](#preliminary)
+    - [Geometric beauty of score matrices](#geometric-beauty-of-score-matrices)
     - [Pseudocode](#pseudocode)
+7. [Conclusion](#conclusion)
 
 ## Introduction
 Hey, you! Remember Purble Place?
@@ -352,12 +354,140 @@ Here are some useful definitions before jumping into the pseudocode.
 
 For intermediate level, we have
 
-$C:=\{\text{`1'}, \text{`2'}, \text{`3'}, \text{`4'}\},$ where $\text{`1'}, \text{`2'}, \text{`3'}, \text{`4'}$ symbolise each of the four colours. 
+$C:=\{$'1', '2', '3', '4'$\},$ where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
 
 ##### *(These colour symbols do not have to be numbers and can be whatever the user wants. Numbers are chosen only because they look nicer.)*
 
-$\mathbf{V}:=$ the $256\times4$ matrix
+$\mathbf{V}:=$ all combinations $\in \text{M}_{256\times4}(C)$ such that $\mathbf{V}[i,:]$ is the $i$<sup>th</sup> combination (feature vector). 
 
-Below shows how the code is implemented. 
+##### Note: feature vectors are vectors $\in C^4$ where each entry denotes the corresponding colour at that specific feature location. 
+
+<p align=center>
+    <img src=graphics/V.png height=200>
+</p>
+
+$V_{pos}:=$ the set of possible combinations given guess results, and is $C^4$ initially. 
+
+$\mathbf{M}_{rcrf}:= (m_{ij}) \in \text{M}_{256\times256}(\{0,1,...,4\})$ where $m_{ij}$ is the number of right colour right features when $\mathbf{V}[i,:]$ is the true feature vector and $\mathbf{V}[j,:]$ is the guess feature vector. 
+
+##### Note: Number of right colour right features is the same when the true feature vector is swapped with the guess feature vector, i.e. $m_{ij} = m_{ji}$ for $i, j = 1,2,...,256$. $\mathbf{M}_{rcrf}$ is symmetric follows. 
+
+<p align=center>
+    <img src=graphics/intermediate_RCRF.png width=250>
+</p>
+
+##### e.g. there is 1 right colour right feature when true vector vector is the 256th feature vector `['4', '4', '4', '4']` and the guess vector is the 4th `['1', '1', '1', '4']`. 
+
+For advanced level, $C$, $\mathbf{V}$, $V_{pos}$, and $\mathbf{M}_{rcrf}$ are defined similarly, with
+
+$C:=\{$'1', '2', '3', '4', '5'$\}$
+
+$\mathbf{V}:=$ all combinations $\in \text{M}_{3125\times5}(C)$ such that $\mathbf{V}[i,:]$ is the $i$<sup>th</sup> feature vector. 
+
+$V_{pos}:=$ the set of possible combinations given guess results, and is $C^5$ initially. 
+
+$\mathbf{M}_{rcrf}:= (m_{ij}) \in \text{M}_{3125\times3125}(\{0,1,...,5\})$ where $m_{ij}$ is the number of **right colour right features** when $\mathbf{V}[i,:]$ is the true feature vector and $\mathbf{V}[j,:]$ is the guess feature vector. 
+
+<p align=center>
+    <img src=graphics/advanced_RCRF.png width=250>
+</p>
+
+Additionally, we define
+
+$\mathbf{M}_{rcwf}:= (m_{ij}) \in \text{M}_{3125\times3125}(\{0,1,...,5\})$ where $m_{ij}$ is the number of **right colour wrong features** when $\mathbf{V}[i,:]$ is the true feature vector and $\mathbf{V}[j,:]$ is the guess feature vector. 
+
+<br></br>
+
+The reason why defined the right-colour-right-feature matrix $\mathbf{M}_{rcrf}$ and the right-colour-wrong-feature matrix $\mathbf{M}_{rcwf}$ is because we can simply look up rcrf or rcwf scores in the pre-calculated matrices, which improves computation speed significantly. 
+
+With everything defined, we may move onto the [pseudocode](#pseudocode). However, I would like to go on a little tangent on the geometric beauty of the rcrf and rcwf matrices.
+
+### Geometric beauty of score matrices
+
+The indexing of feature vectors is conveniently glossed over in the definitions because the order in which the feature vectors are indexed does not affect any of the coding (provided the indices remain the same as the algorithm runs, of course). However, it does play an important role in the visualisation of the two score matrices. 
+
+For this reason, I will explicitly state how feature vectors are indexed. 
+
+In intermediate level difficulty, there are $4^4=256$ feature vectors in total. For each index $i=1,2,...,256$, we first subtract 1 (which will become apparent why) then express it in base 4. 
+
+e.g. For $i=28$, we have $i-1=27=(0123)_4$
+
+In base 4, there are 4 values: 0, 1, 2, 3. Obviously. And now, let's say if accordingly from 0 to 3, we use them to represent each of the colour. Then $27=(0123)_4$ corresponds to the feature vector `['1', '2', '3', '4']`. 
+
+We have found a way to index the feature vectors! 
+
+Here are some examples of converting indices into feature vectors:
+
+$i=1$: $i-1=0=(0000)_4$, corresponds to feature vector `['1', '1', '1', '1']`
+
+$i=256$: $i-1=255=(3333)_4$, corresponds to feature vector `['4', '4', '4', '4']`
+
+$i=35$: $i-1=34=(0202)_4$, corresponds to feature vector `['1', '3', '1', '3']`
+
+$i=229$: $i-1=228=(3210)_4$, corresponds to feature vector `['4', '3', '2', '1']`
+
+Using this index convention, let's take a look at the heatmap of the intermediate level rcrf matrix (figure 9). 
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/intermediate_RCRF_heatmap.png width=400>
+</p>
+<p align=center>
+    Figure 9: Heatmap of rcrf matrix; intermediate level
+</p>
+
+<br></br>
+
+It is fascinating how simply by matching digits between two numbers (in base 4 in our case) can result in such a astonishingly beautiful matrix. 
+
+It has the magical property that all right-diagonal entries are identical to each other!
+
+The rcrf matrix in advanced level also displays such property. See below figure 10. 
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_RCRF_heatmap.png width=400>
+</p>
+<p align=center>
+    Figure 10: Heatmap of rcrf matrix; intermediate level
+</p>
+
+<br></br>
+
+What about the rcwf matrix? Remember, right colour wrong features do not include right colour right features, so we might not get something so diagonal. Figure 11 shows the heatmap of the rcwf matrix in advanced level. 
+
+<br></br>
+
+<p align=center>
+    <img src=data_and_graphs/advanced_RCWF_heatmap.png width=400>
+</p>
+<p align=center>
+    Figure 11: Heatmap of rcwf matrix; intermediate level
+</p>
+
+This is extraordinary. I admit to have spent minutes just staring at this heatmap, admiring its beauty. As expected, it loses its magical "right-diagonal" property. 
+
+It is unbelievable that such a pretty and intricately-patterned matrix is generated simply by comparing digits between numbers. 
+
+Who would've guessed that a simple game of Purble Shop would lead us to the field of number systems?
+
+<br></br>
 
 ### Pseudocode
+
+<p>
+    <img src=graphics/pseudocode1.png width=500>
+    <img src=graphics/pseudocode2.png width=500>
+</p>
+
+## Conclusion
+
+This has been extremely rewarding for me, and I hope it is for you as well (if you managed to stay for that long). 
+
+I originally just wanted to make a simple bot which solve Purble Shop for me so I can flex to my friends, but the journey to getting there and putting it on GitHub is far from simple. 
+
+From coding standard inputs in Python to writing git, from learning Shannon entropy to researching about number systems, this journey took me to places I never expected. And I am very grateful for that. 
+
+This is the end of my 2022 personal project on solving Purble Shop. Thank you! 
