@@ -351,9 +351,7 @@ Let's start off with the preliminary.
 Here are some useful definitions before jumping into the pseudocode. 
 
 For intermediate level, we have
-$$
-V = \text{something}
-$$
+$V = \text{something}$
 
 Below shows how the code is implemented. 
 
