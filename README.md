@@ -354,7 +354,9 @@ Here are some useful definitions before jumping into the pseudocode.
 
 For intermediate level, we have
 
-$C:=\{ '1', '2', '3', '4' \}$, where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
+$C:=\{ $
+'1', '2', '3', '4'
+$ \}$, where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
 
 ##### *(These colour symbols do not have to be numbers and can be whatever the user wants. Numbers are chosen only because they look nicer.)*
 
