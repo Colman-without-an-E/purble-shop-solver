@@ -354,7 +354,7 @@ Here are some useful definitions before jumping into the pseudocode.
 
 For intermediate level, we have
 
-$C:=\{$'1', '2', '3', '4'$\},$ where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
+$C:=\{$ '1', '2', '3', '4' $\}$, where `'1'`, `'2'`, `'3'`, and `'4'` denote the four colours. 
 
 ##### *(These colour symbols do not have to be numbers and can be whatever the user wants. Numbers are chosen only because they look nicer.)*
 
@@ -380,7 +380,7 @@ $\mathbf{M}_{rcrf}:= (m_{ij}) \in \text{M}_{256\times256}(\{0,1,...,4\})$ where 
 
 For advanced level, $C$, $\mathbf{V}$, $V_{pos}$, and $\mathbf{M}_{rcrf}$ are defined similarly, with
 
-$C:=\{$'1', '2', '3', '4', '5'$\}$
+$C:=\{$ '1', '2', '3', '4', '5' $\}$
 
 $\mathbf{V}:=$ all combinations $\in \text{M}_{3125\times5}(C)$ such that $\mathbf{V}[i,:]$ is the $i$<sup>th</sup> feature vector. 
 
