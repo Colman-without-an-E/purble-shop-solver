@@ -9,6 +9,8 @@
     - [Expectation analysis](#expectation-analysis)
     - [Variance analysis](#variance-analysis)
 6. [Coding](#coding)
+    - [Preliminary](#preliminary)
+    - [Pseudocode](#pseudocode)
 
 ## Introduction
 Hey, you! Remember Purble Place?
@@ -346,7 +348,13 @@ Let's start off with the preliminary.
 
 ### Preliminary
 
-Here are some definitions required before jumping into the pseudocode. 
-$V$
+Here are some useful definitions before jumping into the pseudocode. 
+
+For intermediate level, we have
+$$
+V = \text{something}
+$$
 
 Below shows how the code is implemented. 
+
+### Pseudocode
