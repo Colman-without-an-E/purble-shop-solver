@@ -351,7 +351,12 @@ Let's start off with the preliminary.
 Here are some useful definitions before jumping into the pseudocode. 
 
 For intermediate level, we have
-$V = \text{something}$
+
+$C:=\{\text{`1'}, \text{`2'}, \text{`3'}, \text{`4'}\},$ where $\text{`1'}, \text{`2'}, \text{`3'}, \text{`4'}$ symbolise each of the four colours. 
+
+##### *(These colour symbols do not have to be numbers and can be whatever the user wants. Numbers are chosen only because they look nicer.)*
+
+$\mathbf{V}:=$ the $256\times4$ matrix
 
 Below shows how the code is implemented. 
 
